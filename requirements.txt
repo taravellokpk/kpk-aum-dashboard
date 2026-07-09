@@ -1,0 +1,8 @@
+# Core pipeline dependencies
+requests>=2.31.0
+pyyaml>=6.0.1
+
+# Optional: Google Sheets mirror + adjustments reader (google_sheets.enabled)
+# Uncomment to use. Off the critical path; the pipeline runs without them.
+# gspread>=6.0.0
+# google-auth>=2.29.0

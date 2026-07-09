@@ -1,0 +1,147 @@
+# kpk treasury AUM dashboard configuration.
+#
+# CLIENTS + SECRETS now live in configurator.json (gitignored). That file is the
+# single place to paste API keys and every managed client's wallet addresses, and
+# its `clients` list OVERRIDES the roster below at runtime. The list here is kept
+# as the offline / no-configurator fallback and MUST mirror the managed roster:
+# the four entities currently under kpk management — CoW DAO, Balancer DAO, ENS,
+# and Nexus Mutual. Each client carries its `dune_source_query_id` for the startup
+# drift check. Only the Balancer address is a known real value (offline example).
+
+firm:
+  name: "KPK"
+
+# Real managed addresses (public on-chain data — only the API key is secret).
+# configurator.json still overrides this when present; this committed roster is
+# what CI / fresh checkouts run with.
+clients:
+  - name: "CoW DAO"
+    dune_source_query_id: 7401664
+    addresses:
+      - { address: "0x616de58c011f8736fa20c7ae5352f7f6fb9f0669", chains: [ethereum, gnosis] }
+      - { address: "0x7f8987d6a8bee31bd7be80e877732579e2582a28", chains: [gnosis] }
+      - { address: "0x9009B4411D0e1171cc042b77D7701f46B737Fdb9", chains: [gnosis] }
+  - name: "Balancer DAO"
+    dune_source_query_id: 7398724
+    addresses:
+      - { address: "0x0efccbb9e2c09ea29551879bd9da32362b32fc89", chains: [ethereum, arbitrum, gnosis] }
+  - name: "ENS"
+    dune_source_query_id: 7398264
+    addresses:
+      - { address: "0x4f2083f5fbede34c2714affb3105539775f7fe64", chains: [ethereum] }
+  - name: "Nexus Mutual"
+    dune_source_query_id: 7398589
+    addresses:
+      - { address: "0x8e53d04644e9ab0412a8c6bd228c84da7664cfe3", chains: [ethereum] }
+
+settings:
+  apy_window: "7day"                 # 1day | 7day | 30day
+  include_idle_assets: true          # true = total holdings (deployed + idle, split out, idle excluded from APY); false = deployed-only AUM
+  allow_coingecko: true              # fallback for ETH/EUR reference prices
+  history_points: 30                 # snapshots embedded for sparklines
+  variance_alert_pct: 25             # firm total day-over-day guard band
+                                     # (raised 15→25 for the 2026-07 coverage
+                                     # expansion step-change; can revert after)
+  max_unclassified_pct: 2            # max share of firm total left unclassified
+  apy_sane_min_pct: -0.5             # APY sanity band, lower
+  apy_sane_max_pct: 60               # APY sanity band, upper
+
+# vaults.fyi API networks to query per address. Ethereum's network id upstream is
+# "mainnet". The portfolio API defaults to [base, mainnet, arbitrum, optimism] and
+# EXCLUDES gnosis, so gnosis must be listed explicitly here (EURe + much CoW/Balancer
+# activity lives on Gnosis). Config chain aliases map to these via CHAIN_ALIASES.
+vaultsfyi:
+  base_url: "https://api.vaults.fyi/v2"
+  api_key_env: "VAULTSFYI_API_KEY"   # NAME of the env var; the key itself goes in configurator.json
+  networks: [mainnet, gnosis, base, arbitrum, optimism, polygon]
+  min_usd_value_threshold: 0.5       # ignore dust below this USD value per position
+
+denominations:                       # symbol -> bucket, case-insensitive, editable
+  USD:
+    symbols: [USDC, USDT, DAI, sDAI, USDS, sUSDS, GHO, stkGHO, crvUSD, scrvUSD,
+              FRAX, sFRAX, USDM, PYUSD, USDe, sUSDe, USDC.e, USDbC, RLUSD, syrupUSDC,
+              WXDAI, XDAI]   # WXDAI/XDAI = Gnosis USD-pegged stable
+  ETH:
+    symbols: [ETH, WETH, stETH, wstETH, rETH, cbETH, eETH, weETH, osETH, ETHx,
+              rsETH, ankrETH, sfrxETH]
+  EUR:
+    symbols: [EURe, EURC, EURS, agEUR, EURA, stEUR]
+
+# On-chain coverage supplement: plain token balances vaults.fyi does not index
+# but which sit in the managed safes (found via DeBank reconciliation 2026-07-07).
+# Read via public RPC balanceOf + CoinGecko spot; counted in AUM, EXCLUDED from
+# all APY/alpha figures (their yield is not measured). Deduped automatically if
+# vaults.fyi starts covering them. `fixed_native` entries skip balanceOf and use
+# a manually tracked quantity (only for positions locked in protocol contracts).
+supplements:
+  enabled: true
+  tokens:
+    - { client: "ENS", wallet: "0x4f2083f5fbede34c2714affb3105539775f7fe64", chain: ethereum,
+        symbol: weETH, address: "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee", decimals: 18,
+        coingecko: wrapped-eeth, protocol: "ether.fi", name: "ether.fi weETH" }
+    - { client: "Nexus Mutual", wallet: "0x8e53d04644e9ab0412a8c6bd228c84da7664cfe3", chain: ethereum,
+        symbol: weETH, address: "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee", decimals: 18,
+        coingecko: wrapped-eeth, protocol: "ether.fi", name: "ether.fi weETH" }
+    - { client: "CoW DAO", wallet: "0x616de58c011f8736fa20c7ae5352f7f6fb9f0669", chain: ethereum,
+        symbol: eETH, address: "0x35fA164735182de50811E8e2E824cFb9B6118ac2", decimals: 18,
+        coingecko: ether-fi-staked-eth, protocol: "ether.fi", name: "ether.fi eETH" }
+    - { client: "CoW DAO", wallet: "0x616de58c011f8736fa20c7ae5352f7f6fb9f0669", chain: ethereum,
+        symbol: wstETH, address: "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0", decimals: 18,
+        coingecko: wrapped-steth, protocol: "lido", name: "Lido wstETH" }
+    - { client: "CoW DAO", wallet: "0x616de58c011f8736fa20c7ae5352f7f6fb9f0669", chain: ethereum,
+        symbol: COW, address: "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB", decimals: 18,
+        coingecko: cow-protocol, protocol: "", name: "COW (treasury)", idle: true }
+    - { client: "Balancer DAO", wallet: "0x0efccbb9e2c09ea29551879bd9da32362b32fc89", chain: ethereum,
+        symbol: COW, address: "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB", decimals: 18,
+        coingecko: cow-protocol, protocol: "", name: "COW (treasury)", idle: true }
+    - { client: "Balancer DAO", wallet: "0x0efccbb9e2c09ea29551879bd9da32362b32fc89", chain: gnosis,
+        symbol: osGNO, address: "0xF490c80aAE5f2616d3e3BDa2483E30C4CB21d1A0", decimals: 18,
+        coingecko: stakewise-staked-gno-2, protocol: "stakewise", name: "StakeWise osGNO" }
+    - { client: "Nexus Mutual", wallet: "0x8e53d04644e9ab0412a8c6bd228c84da7664cfe3", chain: ethereum,
+        symbol: NXM, address: "0xd7c49CEE7E9188cCa6AD8FF264C1DA2e69D4Cf3B", decimals: 18,
+        coingecko: nxm, protocol: "", name: "NXM (treasury)", idle: true }
+    # Staked NXM sits in Nexus staking-pool contracts (not balanceOf-readable);
+    # quantity manually tracked from the pool manager UI. Update when restaked.
+    - { client: "Nexus Mutual", wallet: "0x8e53d04644e9ab0412a8c6bd228c84da7664cfe3", chain: ethereum,
+        symbol: NXM, fixed_native: 74229.52, decimals: 18,
+        coingecko: nxm, protocol: "nexus mutual", name: "NXM staked (pool manager)" }
+    # Uniswap V3 single-sided USDC positions (#1312579/#1312580); NFT positions
+    # are not balanceOf-readable — combined quantity manually tracked.
+    - { client: "Nexus Mutual", wallet: "0x8e53d04644e9ab0412a8c6bd228c84da7664cfe3", chain: ethereum,
+        symbol: USDC, fixed_native: 500915, decimals: 6,
+        coingecko: usd-coin, protocol: "uniswap-v3", name: "Uniswap V3 USDC (2 positions)" }
+
+dune:
+  enabled: true                      # registry drift check + reconciliation
+  api_key_env: "DUNE_API_KEY"
+  aggregator_query_id: 7506745       # moved-funds totals per client + grand total
+  registry_drift_check: true         # warn if config addresses differ from Dune
+  reconcile: true                    # compare vaults.fyi value vs onchain balances
+  reconcile_gap_alert_pct: 10        # warn when |vaults.fyi - onchain| exceeds this
+  # balances_query_id:               # a current-balances query keyed on the shared
+                                     # wallet registry; build if absent. When unset,
+                                     # reconciliation is skipped gracefully.
+
+moved_funds:                         # optional complementary KPI, never AUM
+  show_on_dashboard: false
+  source_query_id: 7506745
+  label: "Funds moved to date"
+
+benchmarks:
+  enabled: true                      # pocket vs vaults.fyi benchmark (USD + ETH)
+  reference_network: mainnet         # benchmark reference (Gnosis has no benchmark upstream)
+  networks: [mainnet, base, arbitrum]
+
+google_sheets:
+  enabled: false
+  spreadsheet_id: ""
+  mirror_worksheet: "AUM_log"
+  adjustments_worksheet: "Adjustments"
+
+# Local adjustments fallback (used when google_sheets.enabled is false).
+adjustments:
+  csv_path: "data/adjustments.csv"
+  max_share_pct: 25                  # alert if manual value exceeds this share of firm total
+
+alerts:
+  slack_webhook_env: "SLACK_WEBHOOK_URL"

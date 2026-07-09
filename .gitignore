@@ -1,0 +1,22 @@
+# Secrets
+.env
+# Live configurator: holds the vaults.fyi API key + real client addresses.
+# Commit configurator.example.json instead.
+configurator.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local QA artifacts (generated snapshots ARE committed; these are not)
+data/adjustments.csv
+*.log
+logs/
+.claude/

@@ -1,0 +1,39 @@
+{
+  "_comment": "kpk AUM dashboard configurator. This is the SINGLE place to paste API keys and the wallet addresses of every managed client. Copy this file to configurator.json (gitignored) and fill it in. Rules: (1) the `clients` list here REPLACES the roster in config.yaml, so the dashboard shows exactly these entities; (2) each client may hold MORE THAN ONE address, and one address may span several chains; (3) API keys here populate the env vars unless a real environment variable / CI secret is already set, in which case the env wins; (4) placeholder addresses (anything not a real 0x... 40-hex address) are ignored, so a client with no real address yet simply shows zero. Tuning (apy_window, thresholds, denominations) stays in config.yaml.",
+
+  "vaultsfyi_api_key": "PASTE_YOUR_VAULTS_FYI_API_KEY_HERE",
+  "dune_api_key": "",
+  "slack_webhook_url": "",
+
+  "clients": [
+    {
+      "name": "CoW DAO",
+      "dune_source_query_id": 7401664,
+      "addresses": [
+        { "address": "0xPASTE_COW_ADDRESS_1", "chains": ["ethereum", "gnosis"] },
+        { "address": "0xPASTE_COW_ADDRESS_2", "chains": ["ethereum"] }
+      ]
+    },
+    {
+      "name": "Balancer DAO",
+      "dune_source_query_id": 7398724,
+      "addresses": [
+        { "address": "0xPASTE_BALANCER_ADDRESS_1", "chains": ["ethereum", "arbitrum", "gnosis"] }
+      ]
+    },
+    {
+      "name": "ENS",
+      "dune_source_query_id": 7398264,
+      "addresses": [
+        { "address": "0xPASTE_ENS_ADDRESS_1", "chains": ["ethereum"] }
+      ]
+    },
+    {
+      "name": "Nexus Mutual",
+      "dune_source_query_id": 7398589,
+      "addresses": [
+        { "address": "0xPASTE_NEXUS_ADDRESS_1", "chains": ["ethereum"] }
+      ]
+    }
+  ]
+}

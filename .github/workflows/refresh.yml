@@ -1,0 +1,57 @@
+name: Daily AUM refresh
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # 07:00 UTC = 08:00 CET (winter) / 09:00 CEST (summer)
+  workflow_dispatch: {}    # manual "run now" trigger (for demos)
+
+permissions:
+  contents: write          # to commit refreshed snapshots
+
+concurrency:
+  group: aum-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline (live)
+        # On any HARD validation failure the pipeline exits non-zero: this step
+        # fails, the commit step is skipped, the last good snapshot stays live,
+        # and the pipeline has already sent the Slack alert.
+        env:
+          VAULTSFYI_API_KEY: ${{ secrets.VAULTSFYI_API_KEY }}
+          DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: python -m src.pipeline
+
+      - name: Rebuild shareable single-file dashboard
+        if: success()
+        run: python build_standalone.py
+
+      - name: Commit refreshed snapshot
+        if: success()
+        run: |
+          git config user.name  "kpk-aum-bot"
+          git config user.email "actions@users.noreply.github.com"
+          # history.csv is APPENDED to (never wiped) — it is the time-series store
+          # that powers the AUM trend and the cumulative-alpha accrual.
+          git add data/latest.json data/history.csv dashboard/data.js kpk-aum-dashboard.html
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit."
+          else
+            git commit -m "chore: daily AUM refresh ($(date -u +%Y-%m-%d))"
+            git push
+          fi

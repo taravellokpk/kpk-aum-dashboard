@@ -1,0 +1,82 @@
+{
+  "_comment": "Mock vaults.fyi payloads for offline --sample runs. Raw items match the live /v2/portfolio/positions and /v2/portfolio/idle-assets item shape (asset.symbol, asset.assetPriceInUsd, balanceNative, balanceUsd, apy.{base,reward,total}, network.name). Demonstrates: CoW DAO across 3 distinct addresses; Balancer DAO as ONE address on 3 chains; idle assets (excluded by default); and an unclassified governance token.",
+  "wallets": [
+    {
+      "client": "CoW DAO",
+      "address": "0xa1b2c3d4e5f60718293a4b5c6d7e8f9001020304",
+      "chains": ["ethereum"],
+      "positions": [
+        {"name": "Aave v3 USDC", "network": {"name": "mainnet", "chainId": 1}, "asset": {"symbol": "USDC", "assetPriceInUsd": 1.0, "balanceNative": "4200000", "balanceUsd": "4200000", "unclaimedUsd": "0"}, "apy": {"base": 0.048, "reward": 0.004, "total": 0.052}}
+      ],
+      "idle_assets": [
+        {"symbol": "WETH", "assetPriceInUsd": "3120.45", "balanceNative": "40.1", "balanceUsd": "125170", "network": {"name": "mainnet", "chainId": 1}}
+      ]
+    },
+    {
+      "client": "CoW DAO",
+      "address": "0xb2c3d4e5f60718293a4b5c6d7e8f900102030405",
+      "chains": ["gnosis"],
+      "positions": [
+        {"name": "Spark sDAI", "network": {"name": "gnosis", "chainId": 100}, "asset": {"symbol": "sDAI", "assetPriceInUsd": "1.1123", "balanceNative": "2247000", "balanceUsd": "2500000", "unclaimedUsd": "0"}, "apy": {"base": 0.048, "reward": 0.0, "total": 0.048}},
+        {"name": "Aave Gnosis EURe", "network": {"name": "gnosis", "chainId": 100}, "asset": {"symbol": "EURe", "assetPriceInUsd": "1.0825", "balanceNative": "1662817", "balanceUsd": "1800000", "unclaimedUsd": "0"}, "apy": {"base": 0.031, "reward": 0.0, "total": 0.031}}
+      ]
+    },
+    {
+      "client": "CoW DAO",
+      "address": "0xc3d4e5f60718293a4b5c6d7e8f90010203040506",
+      "chains": ["arbitrum"],
+      "positions": [
+        {"name": "Lido wstETH (bridged)", "network": {"name": "arbitrum", "chainId": 42161}, "asset": {"symbol": "wstETH", "assetPriceInUsd": "3712.10", "balanceNative": "835.1", "balanceUsd": "3100000", "unclaimedUsd": "0"}, "apy": {"base": 0.029, "reward": 0.0, "total": 0.029}}
+      ]
+    },
+
+    {
+      "client": "Balancer DAO",
+      "address": "0x0efccbb9e2c09ea29551879bd9da32362b32fc89",
+      "chains": ["ethereum"],
+      "positions": [
+        {"name": "Aave GHO", "network": {"name": "mainnet", "chainId": 1}, "asset": {"symbol": "GHO", "assetPriceInUsd": "1.0", "balanceNative": "5000000", "balanceUsd": "5000000", "unclaimedUsd": "1200"}, "apy": {"base": 0.058, "reward": 0.003, "total": 0.061}}
+      ],
+      "idle_assets": [
+        {"symbol": "ETH", "assetPriceInUsd": "3120.45", "balanceNative": "12.0", "balanceUsd": "37445", "network": {"name": "mainnet", "chainId": 1}}
+      ]
+    },
+    {
+      "client": "Balancer DAO",
+      "address": "0x0efccbb9e2c09ea29551879bd9da32362b32fc89",
+      "chains": ["gnosis"],
+      "positions": [
+        {"name": "Aave Gnosis EURe", "network": {"name": "gnosis", "chainId": 100}, "asset": {"symbol": "EURe", "assetPriceInUsd": "1.0825", "balanceNative": "2032333", "balanceUsd": "2200000", "unclaimedUsd": "0"}, "apy": {"base": 0.033, "reward": 0.0, "total": 0.033}}
+      ]
+    },
+    {
+      "client": "Balancer DAO",
+      "address": "0x0efccbb9e2c09ea29551879bd9da32362b32fc89",
+      "chains": ["arbitrum"],
+      "positions": [
+        {"name": "Aave Arbitrum USDC.e", "network": {"name": "arbitrum", "chainId": 42161}, "asset": {"symbol": "USDC.e", "assetPriceInUsd": "1.0", "balanceNative": "1500000", "balanceUsd": "1500000", "unclaimedUsd": "0"}, "apy": {"base": 0.052, "reward": 0.003, "total": 0.055}}
+      ]
+    },
+
+    {
+      "client": "ENS",
+      "address": "0xd4e5f60718293a4b5c6d7e8f9001020304050607",
+      "chains": ["ethereum"],
+      "positions": [
+        {"name": "Morpho USDC", "network": {"name": "mainnet", "chainId": 1}, "asset": {"symbol": "USDC", "assetPriceInUsd": "1.0", "balanceNative": "3000000", "balanceUsd": "3000000", "unclaimedUsd": "0"}, "apy": {"base": 0.05, "reward": 0.0, "total": 0.05}},
+        {"name": "ENS governance token", "network": {"name": "mainnet", "chainId": 1}, "asset": {"symbol": "ENS", "assetPriceInUsd": "22.40", "balanceNative": "22321", "balanceUsd": "500000", "unclaimedUsd": "0"}, "apy": {"base": 0.0, "reward": 0.0, "total": 0.0}}
+      ]
+    },
+
+    {
+      "client": "Nexus Mutual",
+      "address": "0xf60718293a4b5c6d7e8f90010203040506070809",
+      "chains": ["ethereum"],
+      "positions": [
+        {"name": "Lido stETH", "network": {"name": "mainnet", "chainId": 1}, "asset": {"symbol": "stETH", "assetPriceInUsd": "3118.90", "balanceNative": "1923.8", "balanceUsd": "6000000", "unclaimedUsd": "0"}, "apy": {"base": 0.027, "reward": 0.0, "total": 0.027}},
+        {"name": "Sky DAI", "network": {"name": "mainnet", "chainId": 1}, "asset": {"symbol": "DAI", "assetPriceInUsd": "1.0", "balanceNative": "2000000", "balanceUsd": "2000000", "unclaimedUsd": "0"}, "apy": {"base": 0.05, "reward": 0.0, "total": 0.05}},
+        {"name": "Lido WETH staking", "network": {"name": "mainnet", "chainId": 1}, "asset": {"symbol": "WETH", "assetPriceInUsd": "3120.45", "balanceNative": "320.5", "balanceUsd": "1000104", "unclaimedUsd": "0"}, "apy": {"base": 0.031, "reward": 0.0, "total": 0.031}}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+client,label,denomination,value_usd,native_value,native_unit,apy_pct,note
+CoW DAO,OTC USDC tranche,USD,1500000,1500000,USD,0,Off-exchange holding not visible to vaults.fyi
+Balancer DAO,BAL/WETH 80/20 LP,ETH,900000,288.4,ETH,0,Raw AMM LP position
+Gnosis DAO,Locked GNO (governance),USD,2000000,,,0,Locked governance token

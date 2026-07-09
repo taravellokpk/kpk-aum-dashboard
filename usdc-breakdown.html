@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>KPK - USDC Positions</title>
+<style>
+  :root{
+    --bg:#f7f7f8;--surface:#fff;--surface-2:#f3f4f4;--raised:#e9eaeb;--hairline:#e5e6e7;--hairline-2:#eff0f1;
+    --text:#1a1b1d;--muted:#6a6d70;--muted-2:#9b9ea1;--idle:#b6b8bb;
+    --mono:ui-monospace,"SFMono-Regular","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:"Inter",ui-sans-serif,"Helvetica Neue",Arial,sans-serif;--maxw:1040px;
+    --shadow:0 1px 2px rgba(20,21,23,.05),0 8px 24px -16px rgba(20,21,23,.16);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5;
+    font-feature-settings:"tnum" 1,"lnum" 1;-webkit-font-smoothing:antialiased;}
+  .num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums lining-nums;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:30px 24px 90px;}
+  .topbar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding-bottom:20px;border-bottom:1px solid var(--hairline);}
+  .brand{display:flex;align-items:baseline;gap:13px;}
+  .logo{font-family:var(--mono);font-weight:700;font-size:22px;letter-spacing:.5px;}
+  .sub{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:2.4px;}
+  .meta{color:var(--muted);font-size:12px;text-align:right;}
+  .hero{padding:42px 0 8px;}
+  .eyebrow{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:3px;}
+  .total{font-family:var(--mono);font-size:clamp(40px,7vw,72px);font-weight:600;line-height:1;margin:14px 0 6px;letter-spacing:-1.5px;}
+  .total .cur{color:var(--muted-2);font-size:.44em;vertical-align:middle;margin-right:8px;}
+  .rule{width:54px;height:3px;background:var(--text);margin:16px 0 22px;border-radius:2px;}
+  .stats{display:flex;flex-wrap:wrap;gap:26px 46px;padding-top:22px;border-top:1px solid var(--hairline);}
+  .stat .k{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;}
+  .stat .v{font-family:var(--mono);font-size:20px;margin-top:5px;}
+  .section{margin-top:50px;}
+  .section>h2{font-size:12px;text-transform:uppercase;letter-spacing:2.4px;color:var(--muted);font-weight:600;
+    margin:0 0 16px;padding-bottom:11px;border-bottom:1px solid var(--hairline);}
+  .breakdown{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow);}
+  .bar{display:flex;height:16px;border-radius:999px;overflow:hidden;background:var(--raised);margin-bottom:16px;}
+  .bar i{height:100%;}
+  .legend{display:flex;flex-direction:column;}
+  .lrow{display:grid;grid-template-columns:14px 1fr auto auto;align-items:center;gap:13px;font-size:13.5px;
+    padding:10px 0;border-bottom:1px solid var(--hairline-2);}
+  .lrow:last-child{border-bottom:none;}
+  .ldot{width:11px;height:11px;border-radius:3px;}
+  .lval{font-family:var(--mono);} .lpct{font-family:var(--mono);color:var(--muted);min-width:52px;text-align:right;}
+  .card{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:14px;}
+  .ch{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px;}
+  .nm{font-size:16px;font-weight:650;}
+  .card .meta{color:var(--muted);font-size:12px;margin-top:3px;text-align:left;}
+  .tot{font-family:var(--mono);font-size:21px;letter-spacing:-.4px;}
+  .tbl{width:100%;border-collapse:collapse;}
+  .tbl th{text-align:left;padding:9px 10px;font-size:9.5px;text-transform:uppercase;letter-spacing:1.1px;
+    color:var(--muted-2);font-weight:600;border-bottom:1px solid var(--hairline);}
+  .tbl th.r,.tbl td.r{text-align:right;}
+  .tbl td{padding:10px;font-size:13px;border-bottom:1px solid var(--hairline-2);}
+  .tbl tr:last-child td{border-bottom:none;}
+  .tbl tr.idle td{background:var(--surface-2);}
+  .tbl .prot{font-weight:500;text-transform:capitalize;} .tbl .chain{color:var(--muted);text-transform:capitalize;font-size:12px;}
+  .tbl td.val{font-family:var(--mono);} .tbl td.apy{font-family:var(--mono);color:var(--muted);}
+  .empty{color:var(--muted-2);font-style:italic;}
+  .foot{margin-top:48px;padding-top:18px;border-top:1px solid var(--hairline);color:var(--muted);font-size:11.5px;max-width:760px;}
+  @media(max-width:620px){.ch{flex-direction:column}}
+</style></head><body><div class="wrap"><div class="topbar"><div class="brand"><span class="logo">KPK</span><span class="sub">USDC Positions across DAOs</span></div><div class="meta">Updated <span class="num">2026-07-01 09:58 UTC</span></div></div><section class="hero"><div class="eyebrow">Total USDC under management</div><div class="total"><span class="cur">$</span>24,930,480</div><div class="rule"></div><div class="stats"><div class="stat"><div class="k">DAOs / clients</div><div class="v">4</div></div><div class="stat"><div class="k">USDC positions</div><div class="v">14</div></div><div class="stat"><div class="k">Deployed</div><div class="v">$23,765,381</div></div><div class="stat"><div class="k">Idle</div><div class="v">$1,165,099</div></div></div></section><section class="section"><h2>Breakdown by DAO</h2><div class="breakdown"><div class="bar"><i style="width:49.6239%;background:#1f2123" title="ENS: $12,371,477 (49.62%)"></i><i style="width:33.4799%;background:#3f4245" title="CoW DAO: $8,346,692 (33.48%)"></i><i style="width:9.6816%;background:#5a5d60" title="Balancer DAO: $2,413,667 (9.68%)"></i><i style="width:7.2146%;background:#76797c" title="Nexus Mutual: $1,798,644 (7.21%)"></i></div><div class="legend"><div class="lrow"><span class="ldot" style="background:#1f2123"></span><span class="llab">ENS</span><span class="lval">$12,371,477</span><span class="lpct">49.62%</span></div><div class="lrow"><span class="ldot" style="background:#3f4245"></span><span class="llab">CoW DAO</span><span class="lval">$8,346,692</span><span class="lpct">33.48%</span></div><div class="lrow"><span class="ldot" style="background:#5a5d60"></span><span class="llab">Balancer DAO</span><span class="lval">$2,413,667</span><span class="lpct">9.68%</span></div><div class="lrow"><span class="ldot" style="background:#76797c"></span><span class="llab">Nexus Mutual</span><span class="lval">$1,798,644</span><span class="lpct">7.21%</span></div></div></div></section><section class="section"><h2>USDC positions by DAO</h2><section class="card"><div class="ch"><div><div class="nm">ENS</div><div class="meta">49.62% of USDC &middot; 3 positions</div></div><div class="tot">$12,371,477</div></div><table class="tbl"><thead><tr><th>Protocol / venue</th><th>Chain</th><th class="r">USDC value</th><th class="r">APY</th></tr></thead><tbody><tr class=""><td class="prot">morpho</td><td class="chain">ethereum</td><td class="r val">$7,003,087</td><td class="r apy">3.87%</td></tr><tr class=""><td class="prot">fluid</td><td class="chain">ethereum</td><td class="r val">$5,368,386</td><td class="r apy">7.52%</td></tr><tr class=""><td class="prot">compound</td><td class="chain">ethereum</td><td class="r val">$3</td><td class="r apy">3.34%</td></tr></tbody></table></section><section class="card"><div class="ch"><div><div class="nm">CoW DAO</div><div class="meta">33.48% of USDC &middot; 2 positions &middot; idle $1,164,397</div></div><div class="tot">$8,346,692</div></div><table class="tbl"><thead><tr><th>Protocol / venue</th><th>Chain</th><th class="r">USDC value</th><th class="r">APY</th></tr></thead><tbody><tr class=""><td class="prot">morpho</td><td class="chain">ethereum</td><td class="r val">$7,182,295</td><td class="r apy">3.87%</td></tr><tr class="idle"><td class="prot">Idle (in wallet)</td><td class="chain">ethereum</td><td class="r val">$1,164,397</td><td class="r apy">idle</td></tr></tbody></table></section><section class="card"><div class="ch"><div><div class="nm">Balancer DAO</div><div class="meta">9.68% of USDC &middot; 4 positions</div></div><div class="tot">$2,413,667</div></div><table class="tbl"><thead><tr><th>Protocol / venue</th><th>Chain</th><th class="r">USDC value</th><th class="r">APY</th></tr></thead><tbody><tr class=""><td class="prot">morpho</td><td class="chain">ethereum</td><td class="r val">$2,057,279</td><td class="r apy">3.87%</td></tr><tr class=""><td class="prot">spark</td><td class="chain">ethereum</td><td class="r val">$351,598</td><td class="r apy">3.60%</td></tr><tr class=""><td class="prot">aave</td><td class="chain">ethereum</td><td class="r val">$4,789</td><td class="r apy">3.86%</td></tr><tr class=""><td class="prot">compound</td><td class="chain">ethereum</td><td class="r val">$2</td><td class="r apy">3.34%</td></tr></tbody></table></section><section class="card"><div class="ch"><div><div class="nm">Nexus Mutual</div><div class="meta">7.21% of USDC &middot; 5 positions &middot; idle $702</div></div><div class="tot">$1,798,644</div></div><table class="tbl"><thead><tr><th>Protocol / venue</th><th>Chain</th><th class="r">USDC value</th><th class="r">APY</th></tr></thead><tbody><tr class=""><td class="prot">morpho</td><td class="chain">ethereum</td><td class="r val">$843,457</td><td class="r apy">8.98%</td></tr><tr class=""><td class="prot">fluid</td><td class="chain">ethereum</td><td class="r val">$704,011</td><td class="r apy">7.52%</td></tr><tr class=""><td class="prot">nexus mutual</td><td class="chain">ethereum</td><td class="r val">$250,474</td><td class="r apy">6.00%</td></tr><tr class=""><td class="prot">morpho</td><td class="chain">ethereum</td><td class="r val">$0</td><td class="r apy">3.87%</td></tr><tr class="idle"><td class="prot">Idle (in wallet)</td><td class="chain">ethereum</td><td class="r val">$702</td><td class="r apy">idle</td></tr></tbody></table></section></section><div class="foot">USDC-family holdings (USDC plus bridged USDC.e / USDbC) across all KPK-managed client wallets, from vaults.fyi. Values are per-position (deployed protocol positions plus uninvested wallet USDC, marked idle). APY is the current-window protocol-reported yield, gross of fees. Point-in-time; not investment advice.</div></div></body></html>

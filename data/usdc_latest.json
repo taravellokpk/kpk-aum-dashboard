@@ -1,0 +1,163 @@
+{
+  "asset": "USDC",
+  "date": "2026-07-01",
+  "updated_at": "2026-07-01 09:58 UTC",
+  "total_usd": 24930479.92,
+  "deployed_usd": 23765380.84,
+  "idle_usd": 1165099.08,
+  "positions": 14,
+  "clients": [
+    {
+      "name": "ENS",
+      "total_usd": 12371476.58,
+      "deployed_usd": 12371476.58,
+      "idle_usd": 0,
+      "positions": 3,
+      "holdings": [
+        {
+          "protocol": "morpho",
+          "name": "kpk USDC",
+          "chain": "ethereum",
+          "value_usd": 7003087.24,
+          "apy_pct": 3.87,
+          "is_idle": false
+        },
+        {
+          "protocol": "fluid",
+          "name": "Fluid USDC",
+          "chain": "ethereum",
+          "value_usd": 5368386.22,
+          "apy_pct": 7.52,
+          "is_idle": false
+        },
+        {
+          "protocol": "compound",
+          "name": "Compound v3 USDC",
+          "chain": "ethereum",
+          "value_usd": 3.12,
+          "apy_pct": 3.34,
+          "is_idle": false
+        }
+      ],
+      "share_pct": 49.62
+    },
+    {
+      "name": "CoW DAO",
+      "total_usd": 8346691.82,
+      "deployed_usd": 7182294.81,
+      "idle_usd": 1164397.01,
+      "positions": 2,
+      "holdings": [
+        {
+          "protocol": "morpho",
+          "name": "kpk USDC",
+          "chain": "ethereum",
+          "value_usd": 7182294.81,
+          "apy_pct": 3.87,
+          "is_idle": false
+        },
+        {
+          "protocol": "Idle (in wallet)",
+          "name": "Uninvested USDC",
+          "chain": "ethereum",
+          "value_usd": 1164397.01,
+          "apy_pct": 0.0,
+          "is_idle": true
+        }
+      ],
+      "share_pct": 33.48
+    },
+    {
+      "name": "Balancer DAO",
+      "total_usd": 2413667.13,
+      "deployed_usd": 2413667.13,
+      "idle_usd": 0,
+      "positions": 4,
+      "holdings": [
+        {
+          "protocol": "morpho",
+          "name": "kpk USDC",
+          "chain": "ethereum",
+          "value_usd": 2057279.16,
+          "apy_pct": 3.87,
+          "is_idle": false
+        },
+        {
+          "protocol": "spark",
+          "name": "Spark Savings USDC",
+          "chain": "ethereum",
+          "value_usd": 351597.52,
+          "apy_pct": 3.6,
+          "is_idle": false
+        },
+        {
+          "protocol": "aave",
+          "name": "Aave v3 USDC",
+          "chain": "ethereum",
+          "value_usd": 4788.87,
+          "apy_pct": 3.86,
+          "is_idle": false
+        },
+        {
+          "protocol": "compound",
+          "name": "Compound v3 USDC",
+          "chain": "ethereum",
+          "value_usd": 1.58,
+          "apy_pct": 3.34,
+          "is_idle": false
+        }
+      ],
+      "share_pct": 9.68
+    },
+    {
+      "name": "Nexus Mutual",
+      "total_usd": 1798644.39,
+      "deployed_usd": 1797942.32,
+      "idle_usd": 702.07,
+      "positions": 5,
+      "holdings": [
+        {
+          "protocol": "morpho",
+          "name": "kpk USDC Yield V2",
+          "chain": "ethereum",
+          "value_usd": 843457.26,
+          "apy_pct": 8.98,
+          "is_idle": false
+        },
+        {
+          "protocol": "fluid",
+          "name": "Fluid USDC",
+          "chain": "ethereum",
+          "value_usd": 704010.82,
+          "apy_pct": 7.52,
+          "is_idle": false
+        },
+        {
+          "protocol": "nexus mutual",
+          "name": "Nexus Mutual RWI Vault",
+          "chain": "ethereum",
+          "value_usd": 250473.86,
+          "apy_pct": 6.0,
+          "is_idle": false
+        },
+        {
+          "protocol": "morpho",
+          "name": "kpk USDC",
+          "chain": "ethereum",
+          "value_usd": 0.38,
+          "apy_pct": 3.87,
+          "is_idle": false
+        },
+        {
+          "protocol": "Idle (in wallet)",
+          "name": "Uninvested USDC",
+          "chain": "ethereum",
+          "value_usd": 702.07,
+          "apy_pct": 0.0,
+          "is_idle": true
+        }
+      ],
+      "share_pct": 7.21
+    }
+  ]
+}
