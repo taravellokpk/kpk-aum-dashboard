@@ -287,6 +287,27 @@
     .meta { font-size:11px; } .htable .nm2 { display:none; }
     .hero .total { letter-spacing:-1px; }
   }
+  .cright { text-align:right; }
+
+  /* ---- mobile refinements (phones) ---- */
+  @media (max-width:560px) {
+    .topbar { flex-direction:column; align-items:flex-start; gap:8px; }
+    .brand { flex-wrap:wrap; row-gap:4px; }
+    .brand .sub { width:100%; letter-spacing:1.6px; font-size:10px; }
+    .meta { text-align:left; font-size:11px; }
+    .hero { padding-top:32px; }
+    .alphahead .ah-v { font-size:25px; letter-spacing:-.5px; }
+    .alphahead .ah-k { font-size:12px; }
+    .benchcard .bh { flex-wrap:wrap; gap:8px; }
+    .pill { white-space:nowrap; }
+    .comp-body > .donut { margin:0 auto; }
+    .dlegend { min-width:100%; }
+    .client .ch { flex-direction:column; gap:12px; }
+    .client .cright { display:flex; align-items:flex-end; justify-content:space-between; width:100%; text-align:left; }
+    .client .tot { text-align:left; }
+    .sparkwrap { margin-top:0; }
+  }
+
   @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; scroll-behavior:auto; } }
 </style>
 </head>
@@ -2521,7 +2542,7 @@ window.__AUM_DATA__ = {
     return '<article class="client">'+
       '<div class="ch"><div><div class="nm">'+esc(c.name)+'</div>'+
       '<div class="meta2">'+fmtNum(c.share_pct,1)+'% of firm AUM · '+share(c.deployed_usd,c.total_usd)+' deployed</div></div>'+
-      '<div style="text-align:right"><div class="tot">'+fmtUsd(c.total_usd)+'</div>'+sparkBlock+'</div></div>'+
+      '<div class="cright"><div class="tot">'+fmtUsd(c.total_usd)+'</div>'+sparkBlock+'</div></div>'+
       '<div class="cbody"><div class="cdonut">'+cdonut+'</div><div class="cinfo">'+
         splitline + tbar(c.deployed_usd, c.idle_usd)+
         '<div class="mini">'+(mini||'<span class="empty">no classified positions</span>')+'</div>'+
@@ -2851,7 +2872,7 @@ window.__AUM_DATA__ = {
             '<span class="logo"></span>'+
             '<span class="sub">Assets Under Management · On behalf of clients</span></div>'+
             '<div class="meta">Updated <span class="num">'+esc(d.updated_at||d.date)+'</span>'+badge+
-            '<br/>APY window <span class="num">'+esc(d.apy_window)+'</span></div></div>';
+            ' · APY window <span class="num">'+esc(d.apy_window)+'</span></div></div>';
 
     html += '<section class="hero"><div class="eyebrow">Total client assets under management, onchain</div>'+
             '<div class="total"><span class="cur">$</span><span class="amt" data-count="'+Math.round(f.total_usd)+'">'+fmtNum(f.total_usd,0)+'</span></div>'+
