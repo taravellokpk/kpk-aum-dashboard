@@ -27,10 +27,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure Pages (auto-enables on first run)
+      # Requires Pages to be enabled once by an admin:
+      # repo Settings -> Pages -> Source: "GitHub Actions" -> Save.
+      - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload dashboard folder
         uses: actions/upload-pages-artifact@v3
