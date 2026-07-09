@@ -1,4 +1,4 @@
-# kpk treasury AUM dashboard
+# KPK treasury AUM dashboard
 
 A daily-refreshed marketing dashboard for the total onchain value managed by KPK, broken down by client and by denomination (USD, ETH, EUR), with the
 TVL-weighted average yield earned in each denomination. It is built to publish a
