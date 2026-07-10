@@ -42,7 +42,10 @@ settings:
   variance_alert_pct: 25             # firm total day-over-day guard band
                                      # (raised 15→25 for the 2026-07 coverage
                                      # expansion step-change; can revert after)
-  max_unclassified_pct: 2            # max share of firm total left unclassified
+  max_unclassified_pct: 8            # max share of firm total left unclassified.
+                                     # ~6-7% is EXPECTED: intentional non-USD/ETH/EUR
+                                     # holdings (staked NXM, AAVE, GNO, COW, BAL) are
+                                     # in AUM but outside the denomination buckets.
   apy_sane_min_pct: -0.5             # APY sanity band, lower
   apy_sane_max_pct: 60               # APY sanity band, upper
 
