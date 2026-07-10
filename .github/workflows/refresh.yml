@@ -2,7 +2,12 @@ name: Daily AUM refresh
 
 on:
   schedule:
-    - cron: "0 7 * * *"   # 07:00 UTC = 08:00 CET (winter) / 09:00 CEST (summer)
+    # GitHub cron is best-effort: top-of-hour slots are congested and runs get
+    # delayed or dropped (07:00 sharp never fired on 2026-07-10). Use an odd
+    # off-peak minute, plus a second slot as an automatic retry — if the first
+    # ran, the second just refreshes again (same-date history row is replaced).
+    - cron: "23 6 * * *"   # ~06:23 UTC = 08:23 CEST
+    - cron: "41 9 * * *"   # ~09:41 UTC backup
   workflow_dispatch: {}    # manual "run now" trigger (for demos)
 
 permissions:
